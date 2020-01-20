@@ -96,6 +96,16 @@ RUN curl -s http://getcomposer.org/installer | php && \
 RUN . ~/.bashrc
 
 #####################################
+# Node and NPM:
+#####################################
+
+# Download Binaries (Change "setup_10.x" for to use other version)
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+
+# Install Nodejs and Npm
+RUN apt install -y nodejs
+
+#####################################
 # Laravel Schedule Cron Job:
 #####################################
 
