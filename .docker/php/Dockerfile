@@ -21,6 +21,8 @@ RUN apt-get update && \
         cron \
         nano \
         libxml2-dev
+        libsqlite3-dev \
+        libsqlite3-0
 
 # Install soap extention
 RUN docker-php-ext-install soap
@@ -40,6 +42,10 @@ RUN docker-php-ext-install pcntl
 
 # Install the PHP zip extention
 RUN docker-php-ext-install zip
+
+# Install the PHP pdo_sqite
+RUN docker-php-ext-install pdo_sqlite
+RUN docker-php-ext-enable pdo_sqlite
 
 # Install the PHP pdo_mysql extention
 RUN docker-php-ext-install pdo_mysql
@@ -141,6 +147,15 @@ RUN chmod +x /usr/bin/horizon
 # docker-compose exec php-fpm t --> run the tests for the project and generate testdox
 RUN echo '#!/bin/bash\n/usr/local/bin/php /var/www/artisan config:clear\n/var/www/vendor/bin/phpunit -d memory_limit=2G --stop-on-error --stop-on-failure --testdox-text=tests/report.txt "$@"' > /usr/bin/t
 RUN chmod +x /usr/bin/t
+# docker-compose exec php-fpm dxdb --> run xdebug disable
+RUN echo '#!/bin/bash\nmv /usr/local/etc/php/conf.d/xdebug.ini /usr/local/etc/php/conf.d/xdebug.bak' > /usr/bin/dxdb
+RUN chmod +x /usr/bin/dxdb
+# docker-compose exec php-fpm exdb --> run xdebug enable
+RUN echo '#!/bin/bash\nmv /usr/local/etc/php/conf.d/xdebug.bak /usr/local/etc/php/conf.d/xdebug.ini' > /usr/bin/exdb
+RUN chmod +x /usr/bin/exdb
+# docker-compose exec php-fpm prt --> run the tests for the project with paratest
+RUN echo '#!/bin/bash\n/usr/local/bin/php /var/www/artisan config:clear\ndxdb\n/var/www/vendor/bin/paratest -f --colors\nexdb' > /usr/bin/prt
+RUN chmod +x /usr/bin/prt
 # docker-compose exec php-fpm d --> run the Laravel Dusk browser tests for the project
 RUN echo '#!/bin/bash\n/usr/local/bin/php /var/www/artisan config:clear\n/bin/bash\n/usr/local/bin/php /var/www/artisan dusk -d memory_limit=2G --stop-on-error --stop-on-failure --testdox-text=tests/report-dusk.txt "$@"' > /usr/bin/d
 RUN chmod +x /usr/bin/d
