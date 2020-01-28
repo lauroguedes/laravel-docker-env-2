@@ -18,12 +18,14 @@ Environment PHP [php-fpm-laravel](https://github.com/Cyber-Duck/php-fpm-laravel)
 * GD PHP Extension
 * BCMath PHP Extension
 * Imagick PHP Extension
+* Sqlite3
 * Memcached
 * Composer
 * Laravel Cron Job for the [task scheduling](https://laravel.com/docs/5.4/scheduling#introduction) setup
 * PHP ini values for Laravel (see [`laravel.ini`](laravel.ini))
 * xDebug (PHPStorm friendly, see [`xdebug.ini`](xdebug.ini)). Update env variable **XDEBUG** for **true** to enable remote xDebug in Dockerfile php folder.
 * `t` alias created to run unit tests `vendor/bin/phpunit` with `docker-compose exec [service_name] t`
+* `prt` alias created to run paratest `vendor/bin/paratest`
 * `d` alias created to run Laravel Dusk browser tests `artisan dusk` with `docker-compose exec [service_name] d`
 * `art` alias created to run the Laravel `artisan` command
 * `fresh` alias created to migrate the database fresh and seed the seeders `artisan migrate:fresh --seed`
