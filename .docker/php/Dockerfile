@@ -1,7 +1,5 @@
 FROM php:7.2-fpm
 
-MAINTAINER clement@cyber-duck.co.uk
-
 ENV XDEBUG="false"
 
 RUN apt-get update && \
@@ -20,7 +18,7 @@ RUN apt-get update && \
         git \
         cron \
         nano \
-        libxml2-dev
+        libxml2-dev \
         libsqlite3-dev \
         libsqlite3-0
 
